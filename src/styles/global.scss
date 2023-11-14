@@ -1,0 +1,57 @@
+@import "https://unpkg.com/ress/dist/ress.min.css";
+@import "./variables";
+
+body {
+  position: relative;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  /*　背景图 */
+  background: $background-image no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-width: 300px;
+
+  /* 页面滚动到末尾时不触发浏览器默认弹跳刷新 ( 防止漏出 html 元素 ) */
+  overscroll-behavior: none;
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    box-shadow:
+      rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+      rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+      rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+    background: $background-image no-repeat center top;
+    background-size: cover !important;
+    height: $nav-height;
+    color: #eee;
+
+    nav {
+      /* container size */
+      margin: 0 auto;
+      padding: 0 1rem;
+      max-width: $breakpoint-lg;
+    }
+  }
+
+  main {
+    /* container size */
+    margin: 0 auto;
+    padding: 0 1rem;
+    max-width: $breakpoint-lg;
+    min-height: calc(100svh - $nav-height - $footer-height);
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: $footer-height;
+    color: #eee;
+  }
+}

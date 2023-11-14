@@ -1,0 +1,30 @@
+---
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+}
+
+const { title, description = "The personal site of BlaxBerry" } = Astro.props;
+---
+
+<meta charset="UTF-8" />
+<meta name="description" property="og:description" content={description} />
+<meta name="generator" content={Astro.generator} />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, initial-scale=1, viewport-fit=cover, width=device-width, initial-scale=1"
+/>
+<meta name="themecolor" media="(prefers-color-scheme: light)" content="white" />
+<meta name="themecolor" media="(prefers-color-scheme: dark)" content="black" />
+
+<link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
+<title>
+  {title ? `Portfolio | ${title}` : "Portfolio"}
+</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&family=Rubik:wght@500;600&display=swap"
+  rel="stylesheet"
+/>

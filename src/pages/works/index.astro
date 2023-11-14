@@ -1,0 +1,10 @@
+---
+import BaseLayout from "@layouts/MainLayout.astro";
+import ReactWorksList from "@components/react/ReactWorksList";
+---
+
+<BaseLayout>
+  <section>
+    <ReactWorksList client:only="react" />
+  </section>
+</BaseLayout>

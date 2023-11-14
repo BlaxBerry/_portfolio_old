@@ -1,0 +1,36 @@
+---
+import "@styles/global.scss";
+import { ViewTransitions } from "astro:transitions";
+import MainHead from "@components/astro/MainHead.astro";
+import MainFooter from "@components/astro/MainFooter.astro";
+import ThemeProvider from "@components/react/ReactThemeProvider";
+import ReactNavBar from "@components/react/ReactNavBar";
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+}
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <MainHead title={title} description={description} />
+    <ViewTransitions />
+  </head>
+
+  <body>
+    <ThemeProvider>
+      <ReactNavBar client:only="react" />
+
+      <main>
+        <slot />
+      </main>
+
+      <MainFooter />
+    </ThemeProvider>
+    <!-- <style is:global></style> -->
+    <!-- <script is:inline></script> -->
+  </body>
+</html>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@layouts/MainLayout.astro";
+import ReactContactForm from "@components/react/ReactContactForm";
+---
+
+<BaseLayout>
+  <section>
+    <ReactContactForm client:only="react" />
+  </section>
+</BaseLayout>
+
+<style lang="scss">
+  @import "../styles/variables.scss";
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: calc(100svh - $nav-height - $footer-height);
+  }
+</style>

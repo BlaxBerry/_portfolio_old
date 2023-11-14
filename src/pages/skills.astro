@@ -1,0 +1,10 @@
+---
+import BaseLayout from "@layouts/MainLayout.astro";
+import ReactSkillsList from "@components/react/ReactSkillsList";
+---
+
+<BaseLayout>
+  <section>
+    <ReactSkillsList client:only="react" />
+  </section>
+</BaseLayout>

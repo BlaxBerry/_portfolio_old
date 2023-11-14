@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+PURPLE='\033[0;35m'
+NOCOLOR='\033[0m'
+
+echo "${PURPLE}[Husky] pre-push${NOCOLOR}"
+
+yarn run prettier
