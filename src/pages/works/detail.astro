@@ -1,0 +1,8 @@
+---
+import BaseLayout from "@layouts/MainLayout.astro";
+import ReactWorkDetail from "@components/react/ReactWorkDetail";
+---
+
+<BaseLayout>
+  <ReactWorkDetail client:only="react" />
+</BaseLayout>

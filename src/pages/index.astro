@@ -9,8 +9,8 @@ import BaseLayout from "@layouts/MainLayout.astro";
   </section>
 
   <section>
-    <div>Hello, my name is Chen</div>
-    <div>I am a Creative Developer who is currently based in Tokyo, Japan.</div>
+    <p>Hello, my name is Chen</p>
+    <p>I am a Creative Developer who is currently based in Tokyo, Japan.</p>
   </section>
 </BaseLayout>
 
@@ -23,6 +23,7 @@ import BaseLayout from "@layouts/MainLayout.astro";
     justify-content: center;
     align-items: center;
     min-height: calc(100svh - $nav-height - $footer-height);
+    color: #eee;
   }
 
   .section-1 {
@@ -39,12 +40,15 @@ import BaseLayout from "@layouts/MainLayout.astro";
     }
 
     @media (min-width: 0) {
-      font-size: 50px;
+      font-size: 80px;
     }
     @media (min-width: $breakpoint-sm) {
-      font-size: 100px;
+      font-size: 10svw;
     }
     @media (min-width: $breakpoint-md) {
+      font-size: 9svw;
+    }
+    @media (min-width: $breakpoint-lg) {
       font-size: 7svw;
     }
   }
