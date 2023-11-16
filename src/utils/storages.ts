@@ -4,11 +4,13 @@ const KEY = "blackberry-portfolio";
 const defaultValue: LocalDataType = {
   selectedWork: undefined,
   skills: [],
+  contactExp: undefined,
 };
 
 export type LocalDataType = {
   selectedWork: WorkDocumentType | undefined;
   skills: SkillDocumentType[];
+  contactExp: number | undefined;
 };
 
 export const getLocalStorage = <T = any>() => {

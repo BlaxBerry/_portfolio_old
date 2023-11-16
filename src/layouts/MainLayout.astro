@@ -3,7 +3,6 @@ import "@styles/global.scss";
 import { ViewTransitions } from "astro:transitions";
 import MainHead from "@components/astro/MainHead.astro";
 import MainFooter from "@components/astro/MainFooter.astro";
-import ThemeProvider from "@components/react/ReactThemeProvider";
 import ReactNavBar from "@components/react/ReactNavBar";
 
 interface Props {
@@ -21,15 +20,13 @@ const { title, description } = Astro.props;
   </head>
 
   <body>
-    <ThemeProvider>
-      <ReactNavBar client:only="react" />
+    <ReactNavBar client:only="react" />
 
-      <main>
-        <slot />
-      </main>
+    <main>
+      <slot />
+    </main>
 
-      <MainFooter />
-    </ThemeProvider>
+    <MainFooter />
     <!-- <style is:global></style> -->
     <!-- <script is:inline></script> -->
   </body>

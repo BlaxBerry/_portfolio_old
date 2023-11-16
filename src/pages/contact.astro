@@ -10,14 +10,15 @@ import ReactContactForm from "@components/react/ReactContactForm";
 </BaseLayout>
 
 <style lang="scss">
-  @import "../styles/variables.scss";
+  @import "@styles/variables.scss";
 
   section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    margin: 0 auto;
+    max-width: $breakpoint-md;
     min-height: calc(100svh - $nav-height - $footer-height);
   }
 </style>

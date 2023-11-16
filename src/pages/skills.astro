@@ -8,3 +8,16 @@ import ReactSkillsList from "@components/react/ReactSkillsList";
     <ReactSkillsList client:only="react" />
   </section>
 </BaseLayout>
+
+<style lang="scss">
+  @import "@styles/variables.scss";
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    min-height: calc(100svh - $nav-height - $footer-height);
+  }
+</style>

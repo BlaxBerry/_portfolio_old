@@ -4,5 +4,16 @@ import ReactWorkDetail from "@components/react/ReactWorkDetail";
 ---
 
 <BaseLayout>
-  <ReactWorkDetail client:only="react" />
+  <section>
+    <ReactWorkDetail client:only="react" />
+  </section>
 </BaseLayout>
+
+<style lang="scss">
+  @import "@styles/variables.scss";
+
+  section {
+    margin: 0 auto;
+    max-width: $breakpoint-md;
+  }
+</style>

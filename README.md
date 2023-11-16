@@ -6,34 +6,42 @@
 - [TypeScript]() v5
 - [React]() v18
 - [Sass]() v1
-- [TailwindCSS]() v3
+- [Tailwind CSS]() v3
 - [Material Tailwind]() v2
+- [React Hook Form]() v7
 - [Firebase]() v10
+- [EmailJS]() v3
 - [Github Action]()
 - [Github Page]()
 
 ## Project Structure
 
 ```shell
+|- .github
+|- .husky
+|- .vscode
 |- public
     |- assets
     |- favicon.svg
 |- src
     |- components
         |- astro
-            |- [xxx].astro
+            |- *.astro
             |- ...
         |- react
-            |- [xxx].tsx
+            |- *.tsx
             |- ...
     |- layouts
         |- MainLayout.astro
+    |- libs
+    |- pages
+        |- *.astro
+        |- ...
     |- styles
         |- global.scss
         |- variables.scss
-    |- pages
-        |- [xxx].astro
-        |- ...
+    |- types
+    |- utils
     |- env.d.ts
 |- .env
 |- package.json

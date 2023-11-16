@@ -1,7 +1,6 @@
-import { Chip, Typography } from "@material-tailwind/react";
-import { getLocalStorage, type LocalDataType } from "@utils/storages";
-import ReactImg from "./ReactImg";
 import { useEffect } from "react";
+import { Carousel, Chip, Typography } from "@material-tailwind/react";
+import { getLocalStorage, type LocalDataType } from "@utils/storages";
 
 function ReactWorkDetail() {
   // const workId = window.location.search.slice(1);
@@ -15,33 +14,65 @@ function ReactWorkDetail() {
   }, []);
 
   return (
-    <div className="text-gray-100">
-      <div className="py-4">
-        <Typography variant="h2" className="mb-2">
-          {selectedWork?.name["enUS"]}
-        </Typography>
+    <div className="text-white">
+      {/* 1. name */}
+      <div className="pb-4 pt-8">
+        <Typography variant="h2">{selectedWork?.name["enUS"]}</Typography>
+      </div>
 
-        <div className="flex space-x-1">
-          {selectedWork?.stacks?.map((s) => (
-            <Chip key={s} value={s} className="rounded-full" />
+      {/* 2. stacks area */}
+      <div className="mb-4 flex space-x-1">
+        {selectedWork?.stacksArea?.map((s) => (
+          <Chip key={s} value={s} className="rounded-full" />
+        ))}
+      </div>
+
+      {/* 3. images */}
+      <div className="mb-10">
+        <Carousel className="rounded-xl">
+          {selectedWork?.images?.map((src, i) => (
+            <img
+              key={i}
+              src={src || "/portfolio/assets/background.webp"}
+              alt={selectedWork?.metaData?.id}
+            />
           ))}
-        </div>
+        </Carousel>
       </div>
 
-      <div className="mb-8 flex overflow-x-scroll">
-        {selectedWork?.images?.map((src, i) => (
-          <ReactImg
-            key={i}
-            src={src ?? ""}
-            alt={selectedWork?.metaData?.id ?? ""}
-          />
-        ))}
+      {/* 4. description */}
+      <div className="mb-10">
+        <Typography variant="h3">Description</Typography>
+        <hr className="my-2" />
+        <Typography variant="lead">
+          {selectedWork?.metaData?.description?.["enUS"]}
+        </Typography>
       </div>
 
-      <div>
-        {selectedWork?.achievements?.["enUS"]?.map((s: string, i: number) => (
-          <p key={i}>{s}</p>
-        ))}
+      {/* 5. skills stacks */}
+      <div className="mb-10">
+        <Typography variant="h3">Technologies I Used</Typography>
+        <hr className="my-2" />
+        <ul className="pl-4">
+          {selectedWork?.stacks?.map((skill) => (
+            <li key={skill} className="list-disc">
+              <Typography variant="lead">{skill}</Typography>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* 6. achievements */}
+      <div className="mb-40">
+        <Typography variant="h3">What I Did</Typography>
+        <hr className="my-2" />
+        <ul>
+          {selectedWork?.achievements?.["enUS"]?.map((s: string, i: number) => (
+            <li key={i}>
+              <Typography variant="lead">{s}</Typography>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

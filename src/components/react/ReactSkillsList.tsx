@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection } from "@firebase/firestore";
 import { firestoreInstance } from "@libs/firebase";
-import ReactImg from "./ReactImg";
-import { setLocalStorage } from "@utils/storages";
+import { Typography } from "@material-tailwind/react";
+
 function ReactSkillsList() {
   const [languagesData, languagesLoading, languagesError] = useCollectionData(
     collection(firestoreInstance, "skills/images/languages"),
@@ -12,60 +12,67 @@ function ReactSkillsList() {
     useCollectionData(
       collection(firestoreInstance, "skills/images/frameworks"),
     );
-  const [databaseCloudData, databaseCloudLoading, databaseCloudError] =
-    useCollectionData(
-      collection(firestoreInstance, "skills/images/database&cloud"),
-    );
-  const [toolsData, toolsLoading, toolsError] = useCollectionData(
-    collection(firestoreInstance, "skills/images/tools"),
-  );
-
-  const skillsList = useMemo(() => {
-    if (languagesData && frameworksData && databaseCloudData && toolsData) {
-      const all = [
-        ...languagesData,
-        ...frameworksData,
-        ...databaseCloudData,
-        ...toolsData,
-      ];
-      setLocalStorage({
-        skills: all,
-      });
-      return all.filter((skill) => skill.show);
-    } else return [];
-  }, [languagesData, frameworksData, databaseCloudData, toolsData]);
 
   const isLoading = useMemo<boolean>(
-    () =>
-      languagesLoading ||
-      frameworksLoading ||
-      databaseCloudLoading ||
-      toolsLoading,
-    [languagesLoading, frameworksLoading, databaseCloudLoading, toolsLoading],
+    () => languagesLoading || frameworksLoading,
+    [languagesLoading, frameworksLoading],
   );
 
   const isError = useMemo<boolean>(
-    () =>
-      !!languagesError ||
-      !!frameworksError ||
-      !!databaseCloudError ||
-      !!toolsError,
-    [languagesError, frameworksError, databaseCloudError, toolsError],
+    () => !!languagesError || !!frameworksError,
+    [languagesError, frameworksError],
   );
 
   if (isError) return <p>Something wrong...</p>;
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="xl:grid-cols-18 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10">
-      {skillsList?.map((item) => (
-        <div
-          key={item?.name}
-          className="col-span-1 m-1 block rounded-xl bg-white/50 p-1 shadow-xl shadow-blue-gray-900/50"
-        >
-          <ReactImg src={item?.src} alt={item?.name} />
+    <div className="w-full text-white">
+      {/* 1. languages */}
+      <div className="mb-10">
+        <Typography variant="h2">Languages</Typography>
+        <hr className="my-2" />
+        <div className="xl:grid-cols-18 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10">
+          {languagesData
+            ?.filter((skill) => skill.show)
+            ?.map((item) => (
+              <div
+                key={item?.name}
+                className="col-span-1 m-1 block rounded-xl bg-white p-1 shadow-xl shadow-blue-gray-900/50"
+              >
+                <img
+                  src={item?.src}
+                  alt={item?.name}
+                  loading="lazy"
+                  draggable={false}
+                />
+              </div>
+            ))}
         </div>
-      ))}
+      </div>
+
+      {/* 2. frameworks */}
+      <div className="mb-10">
+        <Typography variant="h2">Frameworks</Typography>
+        <hr className="my-2" />
+        <div className="xl:grid-cols-18 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10">
+          {frameworksData
+            ?.filter((skill) => skill.show)
+            ?.map((item) => (
+              <div
+                key={item?.name}
+                className="col-span-1 m-1 block rounded-xl bg-white p-1 shadow-xl shadow-blue-gray-900/50"
+              >
+                <img
+                  src={item?.src}
+                  alt={item?.name}
+                  loading="lazy"
+                  draggable={false}
+                />
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 }
