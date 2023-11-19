@@ -31,8 +31,8 @@
           "errorPattern": "Only Alphabets、Chinese、Japanese、Korean characters"
         },
         "contentMessage": {
-          "label": "メッセージ",
-          "errorRequired": "必須項目",
+          "label": "Message Content",
+          "errorRequired": "Required",
           "errorLength": "At Least 20 Characters"
         }
       },
