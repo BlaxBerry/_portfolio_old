@@ -6,6 +6,7 @@ import {
   MenuList,
 } from "@material-tailwind/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { NAVIGATION_LINKS, OUTSIDE_LINKS } from "src/constants";
 
 function ReactNavBar() {
   return (
@@ -19,9 +20,11 @@ function ReactNavBar() {
 
           {/* navigation */}
           <div className="hidden space-x-4 sm:flex">
-            <a href="/portfolio/skills">Skills</a>
-            <a href="/portfolio/works">Works</a>
-            <a href="/portfolio/contact">Contact Me</a>
+            {NAVIGATION_LINKS.map((link) => (
+              <a key={link.id} href={`/portfolio/${link.id}`}>
+                {link.name}
+              </a>
+            ))}
           </div>
 
           <div style={{ flexGrow: 1 }} />
@@ -35,27 +38,23 @@ function ReactNavBar() {
             </MenuHandler>
 
             <MenuList className="block w-full sm:hidden">
-              <a href="/portfolio/skills">
-                <MenuItem>Skills</MenuItem>
-              </a>
-              <a href="/portfolio/works">
-                <MenuItem>Works</MenuItem>
-              </a>
-              <a href="/portfolio/contact">
-                <MenuItem>Contact Me</MenuItem>
-              </a>
-
+              {NAVIGATION_LINKS.map((link) => (
+                <a key={link.id} href={`/portfolio/${link.id}`}>
+                  <MenuItem className="text-center">{link.name}</MenuItem>
+                </a>
+              ))}
               <hr className="my-3" />
-
-              <a
-                href="https://github.com/BlaxBerry/portfolio"
-                rel="noopener"
-                target="_blank"
-              >
-                <MenuItem>Github</MenuItem>
-              </a>
-              <MenuItem disabled>Theme</MenuItem>
-              <MenuItem disabled>Langs</MenuItem>
+              <div className="flex justify-center space-x-4 hover:border-transparent">
+                {OUTSIDE_LINKS.map(({ name, href }) => (
+                  <a key={name} href={href} rel="noopener" target="_blank">
+                    <img
+                      src={`/portfolio/assets/svgs/link-${name}.svg`}
+                      alt="github"
+                      className="h-8 w-8"
+                    />
+                  </a>
+                ))}
+              </div>
             </MenuList>
           </Menu>
         </nav>

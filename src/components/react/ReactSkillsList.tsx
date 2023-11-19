@@ -4,6 +4,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection } from "@firebase/firestore";
 import { firestoreInstance } from "@libs/firebase";
 import type { SkillDocumentType } from "src/types/firestore";
+import ReactResultMsg from "./common/ReactResultMsg";
 
 function ReactSkillsList() {
   const [dataSource, loading, error] = useCollectionData(
@@ -11,8 +12,7 @@ function ReactSkillsList() {
   );
 
   const skillsList = useMemo(
-    () =>
-      dataSource?.filter(({ show }) => show) as unknown as SkillDocumentType[],
+    () => dataSource?.filter(({ show }) => show) as SkillDocumentType[],
     [dataSource],
   );
 
@@ -33,32 +33,33 @@ function ReactSkillsList() {
     [skillsList],
   );
 
-  if (error) return <p>Something wrong...</p>;
-  if (loading) return <p>Loading...</p>;
-
   return (
-    <div className="w-full text-white">
-      {/* 1. languages & runtimes */}
-      <div className="mb-10">
-        <Typography variant="h3">Languages & Runtimes </Typography>
-        <hr className="my-2" />
-        <SkillBlockMemo list={languages?.concat(runtimes)} />
-      </div>
+    <>
+      <ReactResultMsg isError={Boolean(error)} isLoading={loading} />
 
-      {/* 2. frameworks & lis */}
-      <div className="mb-10">
-        <Typography variant="h3">Frameworks & Libraries</Typography>
-        <hr className="my-2" />
-        <SkillBlockMemo list={frameworks} />
-      </div>
+      <div className="w-full text-white">
+        {/* 1. languages & runtimes */}
+        <div className="mb-10">
+          <Typography variant="h3">Languages & Runtimes </Typography>
+          <hr className="my-2" />
+          <SkillBlockMemo list={languages?.concat(runtimes)} />
+        </div>
 
-      {/* 2. devops */}
-      <div className="mb-10">
-        <Typography variant="h3">DevOps</Typography>
-        <hr className="my-2" />
-        <SkillBlockMemo list={devops} />
+        {/* 2. frameworks & lis */}
+        <div className="mb-10">
+          <Typography variant="h3">Frameworks & Libraries</Typography>
+          <hr className="my-2" />
+          <SkillBlockMemo list={frameworks} />
+        </div>
+
+        {/* 2. devops */}
+        <div className="mb-10">
+          <Typography variant="h3">DevOps</Typography>
+          <hr className="my-2" />
+          <SkillBlockMemo list={devops} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -66,7 +67,7 @@ function SkillBlock(props: { list: SkillDocumentType[] }) {
   return (
     <div className="xl:grid-cols-18 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10">
       {props.list?.map((item) => (
-        <a key={item?.name} href={`/portfolio/works?lang=${item.name}`}>
+        <a key={item?.name} href={`/portfolio/works?stack=${item.name}`}>
           <div className="col-span-1 m-1 block rounded-xl bg-white p-1 shadow-xl shadow-blue-gray-900/50">
             <img
               src={item?.src}

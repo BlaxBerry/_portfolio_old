@@ -25,7 +25,7 @@ export interface WorkDocumentType {
   };
   images: string[];
   stacks: string[];
-  stacksArea: Array<"fullstack" | "frontend" | "backend">;
+  keywords: Array<"Frontend" | "Backend" | "DevOps">;
   achievements: {
     [K in Language]: string[];
   };

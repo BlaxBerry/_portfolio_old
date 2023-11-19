@@ -20,10 +20,10 @@ function ReactWorkDetail() {
         <Typography variant="h2">{selectedWork?.name["enUS"]}</Typography>
       </div>
 
-      {/* 2. stacks area */}
+      {/* 2. keywords */}
       <div className="mb-4 flex space-x-1">
-        {selectedWork?.stacksArea?.map((s) => (
-          <Chip key={s} value={s} className="rounded-full" />
+        {selectedWork?.keywords?.map((key) => (
+          <Chip key={key} value={key} className="rounded-full" />
         ))}
       </div>
 
