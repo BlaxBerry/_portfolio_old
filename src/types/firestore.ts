@@ -1,4 +1,4 @@
-type Language = "zhCN" | "enUS" | "jaJP";
+export type Language = "en" | "ja" | "zh" | "ko";
 
 export interface SkillDocumentType {
   name: string;
@@ -8,25 +8,19 @@ export interface SkillDocumentType {
 }
 
 export interface WorkDocumentType {
-  metaData: {
-    id: string;
-    siteUrl: string;
-    favicon: string;
-    period: {
-      start: string;
-      end: string;
-    };
-    description: {
-      [K in Language]: string;
-    };
-  };
-  name: {
-    [K in Language]: string;
-  };
-  images: string[];
+  id: string;
+  name: Record<Language, string>;
   stacks: string[];
   keywords: Array<"Frontend" | "Backend" | "DevOps">;
-  achievements: {
-    [K in Language]: string[];
+  achievements: Record<Language, string[]>;
+  period: {
+    start: string;
+    end: string;
+  };
+  metaData: {
+    siteUrl: string;
+    favicon: string;
+    description: Record<Language, string>;
+    images: string[];
   };
 }

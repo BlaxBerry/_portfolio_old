@@ -11,6 +11,7 @@
 - [React Hook Form]() v7
 - [Firebase]() v10
 - [EmailJS]() v3
+- [Nano Stores]() v0.9
 - [Github Action]()
 - [Github Page]()
 
@@ -37,9 +38,8 @@
     |- pages
         |- *.astro
         |- ...
+    |- store
     |- styles
-        |- global.scss
-        |- variables.scss
     |- types
     |- utils
     |- env.d.ts

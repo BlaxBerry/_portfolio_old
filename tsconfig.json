@@ -11,6 +11,7 @@
       "@layouts/*": ["src/layouts/*"],
       "@libs/*": ["src/libs/*"],
       "@styles/*": ["src/styles/*"],
+      "@store/*": ["src/store/*"],
       "@utils/*": ["src/utils/*"]
     }
   }

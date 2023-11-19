@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import type { ContactFormValue } from "src/types/contact";
-import { setLocalStorage } from "@utils/storages";
 
 function ReactContactForm() {
   const {
@@ -37,7 +36,6 @@ function ReactContactForm() {
         .finally(() => {
           setTimeout(() => {
             setLoading(false);
-            setLocalStorage({ contactExp: Date.now() });
           }, 3000);
           setLoading(false);
         });

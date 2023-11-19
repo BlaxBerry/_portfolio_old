@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { NAVIGATION_LINKS, OUTSIDE_LINKS } from "src/constants";
+import ReactLangsSwitcherMemo from "./ReactLangsSwitcher";
 
 function ReactNavBar() {
   return (
@@ -28,6 +29,8 @@ function ReactNavBar() {
           </div>
 
           <div style={{ flexGrow: 1 }} />
+
+          <ReactLangsSwitcherMemo />
 
           {/* mobile screen menu */}
           <Menu>
