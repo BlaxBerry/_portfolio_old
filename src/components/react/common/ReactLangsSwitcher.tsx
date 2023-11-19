@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useEffect } from "react";
 import {
   IconButton,
   Menu,
@@ -11,10 +11,14 @@ import { LanguageIcon } from "@heroicons/react/24/outline";
 import { useStore } from "@nanostores/react";
 import { $store } from "@store/index";
 import type { Language } from "src/types/firestore";
-import { LANGUAGES } from "src/constants";
+import { DEFAULT_LANGUAGE, LANGUAGES } from "src/constants";
 
 function ReactLangsSwitcher() {
   const { language } = useStore($store);
+
+  useEffect(() => {
+    if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
+  }, [language]);
 
   const onClick = useCallback((lang: Language) => {
     $store.setKey("language", lang);

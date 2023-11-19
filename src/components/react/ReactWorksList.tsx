@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import {
   Button,
   Card,
@@ -14,9 +14,14 @@ import { $store } from "@store/index";
 import ReactImg from "./common/ReactImg";
 import ReactResultMsg from "./common/ReactResultMsg";
 import type { WorkDocumentType } from "src/types/firestore";
+import { DEFAULT_LANGUAGE } from "src/constants";
 
 function ReactWorksList() {
   const { language } = useStore($store);
+
+  useEffect(() => {
+    if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
+  }, [language]);
 
   const [dataSource, loading, error] = useCollectionData(
     collection(firestoreInstance, "works"),

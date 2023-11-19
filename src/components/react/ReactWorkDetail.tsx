@@ -1,9 +1,16 @@
+import { useEffect } from "react";
 import { Carousel, Chip, Typography } from "@material-tailwind/react";
 import { useStore } from "@nanostores/react";
 import { $store } from "@store/index";
+import { DEFAULT_LANGUAGE } from "src/constants";
 
 function ReactWorkDetail() {
   const { language, selectedWork } = useStore($store);
+
+  useEffect(() => {
+    if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
+    if (!selectedWork) window.location.replace("/portfolio/works");
+  }, [language, selectedWork]);
 
   return (
     <div className="text-white">
