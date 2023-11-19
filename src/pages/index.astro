@@ -1,5 +1,8 @@
 ---
 import BaseLayout from "@layouts/MainLayout.astro";
+import pkg from "@material-tailwind/react";
+
+const { Typography } = pkg;
 ---
 
 <BaseLayout>
@@ -9,8 +12,14 @@ import BaseLayout from "@layouts/MainLayout.astro";
   </section>
 
   <section>
-    <p>Hello, my name is Chen</p>
-    <p>I am a Creative Developer who is currently based in Tokyo, Japan.</p>
+    <Typography variant="lead">
+      Hello, my name is Chen
+      <br />
+       I am a Web Developer currently based in Tokyo, Japan.
+      <br />
+       Passionate about new technologies and intuitive interfaces.
+    </Typography>
+    <p></p>
   </section>
 </BaseLayout>
 

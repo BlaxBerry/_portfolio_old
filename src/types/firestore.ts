@@ -4,6 +4,7 @@ export interface SkillDocumentType {
   name: string;
   src: string;
   show: boolean; // 默认显示
+  belongTo: "language" | "framework" | "runtime" | "devops";
 }
 
 export interface WorkDocumentType {

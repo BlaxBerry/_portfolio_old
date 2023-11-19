@@ -1,80 +1,86 @@
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
+import { Typography } from "@material-tailwind/react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection } from "@firebase/firestore";
 import { firestoreInstance } from "@libs/firebase";
-import { Typography } from "@material-tailwind/react";
+import type { SkillDocumentType } from "src/types/firestore";
 
 function ReactSkillsList() {
-  const [languagesData, languagesLoading, languagesError] = useCollectionData(
-    collection(firestoreInstance, "skills/images/languages"),
-  );
-  const [frameworksData, frameworksLoading, frameworksError] =
-    useCollectionData(
-      collection(firestoreInstance, "skills/images/frameworks"),
-    );
-
-  const isLoading = useMemo<boolean>(
-    () => languagesLoading || frameworksLoading,
-    [languagesLoading, frameworksLoading],
+  const [dataSource, loading, error] = useCollectionData(
+    collection(firestoreInstance, "skills"),
   );
 
-  const isError = useMemo<boolean>(
-    () => !!languagesError || !!frameworksError,
-    [languagesError, frameworksError],
+  const skillsList = useMemo(
+    () =>
+      dataSource?.filter(({ show }) => show) as unknown as SkillDocumentType[],
+    [dataSource],
   );
 
-  if (isError) return <p>Something wrong...</p>;
-  if (isLoading) return <p>Loading...</p>;
+  const languages = useMemo(
+    () => skillsList?.filter(({ belongTo }) => belongTo === "language"),
+    [skillsList],
+  );
+  const runtimes = useMemo(
+    () => skillsList?.filter(({ belongTo }) => belongTo === "runtime"),
+    [skillsList],
+  );
+  const frameworks = useMemo(
+    () => skillsList?.filter(({ belongTo }) => belongTo === "framework"),
+    [skillsList],
+  );
+  const devops = useMemo(
+    () => skillsList?.filter(({ belongTo }) => belongTo === "devops"),
+    [skillsList],
+  );
+
+  if (error) return <p>Something wrong...</p>;
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="w-full text-white">
-      {/* 1. languages */}
+      {/* 1. languages & runtimes */}
       <div className="mb-10">
-        <Typography variant="h2">Languages</Typography>
+        <Typography variant="h3">Languages & Runtimes </Typography>
         <hr className="my-2" />
-        <div className="xl:grid-cols-18 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10">
-          {languagesData
-            ?.filter((skill) => skill.show)
-            ?.map((item) => (
-              <div
-                key={item?.name}
-                className="col-span-1 m-1 block rounded-xl bg-white p-1 shadow-xl shadow-blue-gray-900/50"
-              >
-                <img
-                  src={item?.src}
-                  alt={item?.name}
-                  loading="lazy"
-                  draggable={false}
-                />
-              </div>
-            ))}
-        </div>
+        <SkillBlockMemo list={languages?.concat(runtimes)} />
       </div>
 
-      {/* 2. frameworks */}
+      {/* 2. frameworks & lis */}
       <div className="mb-10">
-        <Typography variant="h2">Frameworks</Typography>
+        <Typography variant="h3">Frameworks & Libraries</Typography>
         <hr className="my-2" />
-        <div className="xl:grid-cols-18 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10">
-          {frameworksData
-            ?.filter((skill) => skill.show)
-            ?.map((item) => (
-              <div
-                key={item?.name}
-                className="col-span-1 m-1 block rounded-xl bg-white p-1 shadow-xl shadow-blue-gray-900/50"
-              >
-                <img
-                  src={item?.src}
-                  alt={item?.name}
-                  loading="lazy"
-                  draggable={false}
-                />
-              </div>
-            ))}
-        </div>
+        <SkillBlockMemo list={frameworks} />
+      </div>
+
+      {/* 2. devops */}
+      <div className="mb-10">
+        <Typography variant="h3">DevOps</Typography>
+        <hr className="my-2" />
+        <SkillBlockMemo list={devops} />
       </div>
     </div>
   );
 }
+
+function SkillBlock(props: { list: SkillDocumentType[] }) {
+  return (
+    <div className="xl:grid-cols-18 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10">
+      {props.list?.map((item) => (
+        <a key={item?.name} href={`/portfolio/works?lang=${item.name}`}>
+          <div className="col-span-1 m-1 block rounded-xl bg-white p-1 shadow-xl shadow-blue-gray-900/50">
+            <img
+              src={item?.src}
+              alt={item?.name}
+              loading="lazy"
+              draggable={false}
+            />
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
+const SkillBlockMemo = memo(SkillBlock);
 
 export default ReactSkillsList;
