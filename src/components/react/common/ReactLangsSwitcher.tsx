@@ -38,7 +38,7 @@ function ReactLangsSwitcher() {
         </IconButton>
       </MenuHandler>
 
-      <MenuList>
+      <MenuList className="hidden sm:block">
         {AVAILABLE_LANGUAGES.map((lang) => (
           <MenuItem
             key={lang}

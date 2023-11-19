@@ -51,7 +51,8 @@
     "nav": {
       "skills": "スキル",
       "works": "作品",
-      "contact": "お問い合わせ"
+      "contact": "お問い合わせ",
+      "languageSwitcher": "言語"
     },
     "language": {
       "en": "英語",

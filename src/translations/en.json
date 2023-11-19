@@ -51,7 +51,8 @@
     "nav": {
       "skills": "Skills",
       "works": "Works",
-      "contact": "Contact Me"
+      "contact": "Contact Me",
+      "languageSwitcher": "Languages"
     },
     "language": {
       "en": "English",

@@ -56,7 +56,7 @@ function ReactContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      <Typography variant="h1" className="mb-5 text-white">
+      <Typography variant="h1" className="mb-10 text-white">
         {message?.title ?? "..."}
       </Typography>
 
