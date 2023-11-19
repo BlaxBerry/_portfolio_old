@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Carousel, Chip, Typography } from "@material-tailwind/react";
 import { useStore } from "@nanostores/react";
 import { $store } from "@store/index";
-import { DEFAULT_LANGUAGE } from "src/constants";
+import { DEFAULT_LANGUAGE, TRANSLATIONS } from "src/constants";
 
 function ReactWorkDetail() {
   const { language, selectedWork } = useStore($store);
@@ -11,6 +11,8 @@ function ReactWorkDetail() {
     if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
     if (!selectedWork) window.location.replace("/portfolio/works");
   }, [language, selectedWork]);
+
+  const message = TRANSLATIONS[language]?.pages?.workDetail;
 
   return (
     <div className="text-white">
@@ -43,7 +45,7 @@ function ReactWorkDetail() {
 
       {/* 4. description */}
       <div className="mb-10">
-        <Typography variant="h3">Description</Typography>
+        <Typography variant="h3">{message.description}</Typography>
         <hr className="my-2" />
         <Typography variant="lead">
           {selectedWork?.metaData?.description?.[language] ?? "..."}
@@ -52,7 +54,7 @@ function ReactWorkDetail() {
 
       {/* 5. skills stacks */}
       <div className="mb-10">
-        <Typography variant="h3">Technologies I Used</Typography>
+        <Typography variant="h3">{message.stacks}</Typography>
         <hr className="my-2" />
         <ul className="pl-4">
           {selectedWork?.stacks?.map((skill) => (
@@ -65,7 +67,7 @@ function ReactWorkDetail() {
 
       {/* 6. achievements */}
       <div className="mb-40">
-        <Typography variant="h3">What I Did</Typography>
+        <Typography variant="h3">{message.achievements}</Typography>
         <hr className="my-2" />
         <ul>
           {selectedWork?.achievements?.[language]?.map(

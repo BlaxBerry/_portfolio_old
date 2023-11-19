@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { sendMailByEmailjs } from "@libs/emailJS";
 import {
@@ -8,6 +8,9 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
+import { useStore } from "@nanostores/react";
+import { $store } from "@store/index";
+import { DEFAULT_LANGUAGE, TRANSLATIONS } from "src/constants";
 import type { ContactFormValue } from "src/types/contact";
 
 function ReactContactForm() {
@@ -43,25 +46,33 @@ function ReactContactForm() {
     [setLoading],
   );
 
+  const { language } = useStore($store);
+
+  useEffect(() => {
+    if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
+  }, [language]);
+
+  const message = TRANSLATIONS[language]?.pages?.contact;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <Typography variant="h1" className="mb-5 text-white">
-        Contact Me
+        {message?.title ?? "..."}
       </Typography>
 
       {/* emailAddress */}
       <div className="mb-5">
         <Input
           {...register("emailAddress", {
-            required: "Required",
+            required: message?.form?.emailAddress?.errorRequired,
             pattern: {
               value: /^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/,
-              message: "Invalid Email address",
+              message: message?.form?.emailAddress?.errorPattern,
             },
           })}
           error={Boolean(errors.userName)}
           disabled={loading}
-          label="Email Address"
+          label={message?.form?.emailAddress?.label}
           autoComplete="off"
           color="blue-gray"
           className="!border-2 text-white"
@@ -77,20 +88,20 @@ function ReactContactForm() {
       <div className="mb-5">
         <Input
           {...register("userName", {
-            required: "Required",
-            minLength: {
-              value: 6,
-              message: "Cannot exceed 6 characters",
-            },
+            required: message?.form?.userName?.errorRequired,
             pattern: {
               value:
                 /^[\u4e00-\u9fff\u3400-\u4dbf\u0041-\u005a\u0061-\u007a\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af]+$/i,
-              message: "Only Alphabets、Chinese、Japanese、Korean characters",
+              message: message?.form?.userName?.errorPattern,
+            },
+            minLength: {
+              value: 6,
+              message: message?.form?.userName?.errorLength,
             },
           })}
           error={Boolean(errors.userName)}
           disabled={loading}
-          label="User Name"
+          label={message?.form?.userName?.label}
           autoComplete="off"
           color="blue-gray"
           className="!border-2 text-white"
@@ -106,15 +117,15 @@ function ReactContactForm() {
       <div className="mb-5">
         <Textarea
           {...register("contactMessage", {
-            required: "Required",
+            required: message?.form?.contentMessage?.errorRequired,
             minLength: {
               value: 20,
-              message: "Cannot exceed 20 characters",
+              message: message?.form?.contentMessage?.errorLength,
             },
           })}
           error={Boolean(errors.contactMessage)}
           disabled={loading}
-          label="Contact Message"
+          label={message?.form?.contentMessage?.label}
           rows={6}
           size="lg"
           color="blue-gray"
@@ -122,7 +133,7 @@ function ReactContactForm() {
           labelProps={{ className: "!text-white !font-bold" }}
         />
         <Typography variant="small" className="h-5 font-bold text-red-500">
-          {errors.contactMessage?.message || " "}
+          {errors.contactMessage?.message ?? " "}
         </Typography>
       </div>
 
@@ -130,7 +141,7 @@ function ReactContactForm() {
         {loading && (
           <div className="flex items-center justify-center space-x-4 ">
             <Spinner className="mr-4" />
-            Loading...
+            {message?.messages?.loading}
           </div>
         )}
 
@@ -141,28 +152,30 @@ function ReactContactForm() {
                 <Button
                   type="submit"
                   className="bg-gradient-to-r from-green-500 to-cyan-500"
+                  style={{ minWidth: 100 }}
                 >
-                  Submit
+                  {message?.buttons?.submit ?? "..."}
                 </Button>
                 <Button
                   type="reset"
                   className="bg-gradient-to-r from-red-500 to-pink-300"
+                  style={{ minWidth: 100 }}
                   onClick={() => reset()}
                 >
-                  reset
+                  {message?.buttons?.reset ?? "..."}
                 </Button>
               </div>
             )}
 
             {result === "SUCCESS" && (
               <p className="flex items-center justify-center text-lg font-bold text-green-400">
-                Sent Successfully, Thanks for your Message
+                {message?.messages?.success ?? "..."}
               </p>
             )}
 
             {result === "FAILED" && (
               <p className="flex items-center justify-center text-lg font-bold text-red-400">
-                Something Went Wrong, Try Again Later
+                {message?.messages?.failed ?? "..."}
               </p>
             )}
           </>

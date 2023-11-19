@@ -14,7 +14,7 @@ import { $store } from "@store/index";
 import ReactImg from "./common/ReactImg";
 import ReactResultMsg from "./common/ReactResultMsg";
 import type { WorkDocumentType } from "src/types/firestore";
-import { DEFAULT_LANGUAGE } from "src/constants";
+import { DEFAULT_LANGUAGE, TRANSLATIONS } from "src/constants";
 
 function ReactWorksList() {
   const { language } = useStore($store);
@@ -22,6 +22,8 @@ function ReactWorksList() {
   useEffect(() => {
     if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
   }, [language]);
+
+  const message = TRANSLATIONS[language];
 
   const [dataSource, loading, error] = useCollectionData(
     collection(firestoreInstance, "works"),
@@ -43,10 +45,12 @@ function ReactWorksList() {
           <>
             {relativeStack && (
               <Typography variant="h5">
-                Not Found Works Based on <strong>{relativeStack}</strong>
+                {message?.components?.results?.notFoundBefore}
+                &emsp;<strong>{relativeStack}</strong>&emsp;
+                {message?.components?.results?.notFoundEnd}
               </Typography>
             )}
-            <RefreshWorkPageMemo />
+            <RefreshWorkPageMemo message={message?.pages?.works?.checkAll} />
           </>
         )}
       </ReactResultMsg>
@@ -87,16 +91,18 @@ function ReactWorksList() {
         ))}
       </div>
 
-      {!!worksList?.length && relativeStack && <RefreshWorkPageMemo />}
+      {!!worksList?.length && relativeStack && (
+        <RefreshWorkPageMemo message={message?.pages?.works?.checkAll} />
+      )}
     </>
   );
 }
 
-function RefreshWorkPage() {
+function RefreshWorkPage(props: { message: any }) {
   return (
     <div className="py-10 text-center">
       <a href="/portfolio/works">
-        <Button>Check All Works</Button>
+        <Button>{props.message}</Button>
       </a>
     </div>
   );

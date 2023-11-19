@@ -1,0 +1,67 @@
+{
+  "pages": {
+    "home": {
+      "description": [
+        "Hello, my name is Chen.",
+        "I am a Web Developer currently based in Tokyo, Japan.",
+        "Passionate about new technologies and intuitive interfaces."
+      ]
+    },
+    "skills": {},
+    "works": {
+      "checkAll": "Check All Works"
+    },
+    "workDetail": {
+      "description": "Description",
+      "stacks": "Technologies I Used",
+      "achievements": "What I Did"
+    },
+    "contact": {
+      "title": "Contact Me",
+      "form": {
+        "emailAddress": {
+          "label": "Email Address",
+          "errorRequired": "Required",
+          "errorPattern": "Invalid Email Address"
+        },
+        "userName": {
+          "label": "User Name",
+          "errorRequired": "Required",
+          "errorLength": "At Least 6 Characters",
+          "errorPattern": "Only Alphabets、Chinese、Japanese、Korean characters"
+        },
+        "contentMessage": {
+          "label": "メッセージ",
+          "errorRequired": "必須項目",
+          "errorLength": "At Least 20 Characters"
+        }
+      },
+      "buttons": {
+        "submit": "Submit",
+        "reset": "Reset"
+      },
+      "messages": {
+        "loading": "Loading...",
+        "success": "Sent Successfully, Thanks for your Message",
+        "failed": "Something Went Wrong, Try Again Later"
+      }
+    }
+  },
+  "components": {
+    "nav": {
+      "skills": "Skills",
+      "works": "Works",
+      "contact": "Contact Me"
+    },
+    "language": {
+      "en": "English",
+      "ja": "Japanese"
+    },
+    "results": {
+      "loading": "Loading...",
+      "error": "Something Wrong...",
+      "notFoundBefore": "Not Found Works Based on ",
+      "notFoundEnd": ""
+    }
+  }
+}

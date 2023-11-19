@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "@layouts/MainLayout.astro";
-import pkg from "@material-tailwind/react";
-
-const { Typography } = pkg;
+import ReactHomeDescription from "@components/react/ReactHomeDescription";
 ---
 
 <BaseLayout>
@@ -12,14 +10,7 @@ const { Typography } = pkg;
   </section>
 
   <section>
-    <Typography variant="lead">
-      Hello, my name is Chen
-      <br />
-       I am a Web Developer currently based in Tokyo, Japan.
-      <br />
-       Passionate about new technologies and intuitive interfaces.
-    </Typography>
-    <p></p>
+    <ReactHomeDescription client:only="react" />
   </section>
 </BaseLayout>
 

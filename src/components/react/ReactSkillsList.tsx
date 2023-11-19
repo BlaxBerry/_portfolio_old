@@ -1,36 +1,32 @@
-import { memo, useMemo } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { Typography } from "@material-tailwind/react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection } from "@firebase/firestore";
 import { firestoreInstance } from "@libs/firebase";
+import { useStore } from "@nanostores/react";
+import { $store } from "@store/index";
+import { DEFAULT_LANGUAGE } from "src/constants";
 import type { SkillDocumentType } from "src/types/firestore";
 import ReactResultMsg from "./common/ReactResultMsg";
 
 function ReactSkillsList() {
+  const { language } = useStore($store);
+
+  useEffect(() => {
+    if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
+  }, [language]);
+
   const [dataSource, loading, error] = useCollectionData(
     collection(firestoreInstance, "skills"),
   );
 
-  const skillsList = useMemo(
-    () => dataSource?.filter(({ show }) => show) as SkillDocumentType[],
+  const getSkillsList = useCallback(
+    (belongTo: SkillDocumentType["belongTo"]) => {
+      return dataSource
+        ?.filter(({ show }) => show)
+        ?.filter((skill) => skill.belongTo === belongTo) as SkillDocumentType[];
+    },
     [dataSource],
-  );
-
-  const languages = useMemo(
-    () => skillsList?.filter(({ belongTo }) => belongTo === "language"),
-    [skillsList],
-  );
-  const runtimes = useMemo(
-    () => skillsList?.filter(({ belongTo }) => belongTo === "runtime"),
-    [skillsList],
-  );
-  const frameworks = useMemo(
-    () => skillsList?.filter(({ belongTo }) => belongTo === "framework"),
-    [skillsList],
-  );
-  const devops = useMemo(
-    () => skillsList?.filter(({ belongTo }) => belongTo === "devops"),
-    [skillsList],
   );
 
   return (
@@ -40,23 +36,25 @@ function ReactSkillsList() {
       <div className="w-full text-white">
         {/* 1. languages & runtimes */}
         <div className="mb-10">
-          <Typography variant="h3">Languages & Runtimes </Typography>
+          <Typography variant="h3">Languages & Runtimes</Typography>
           <hr className="my-2" />
-          <SkillBlockMemo list={languages?.concat(runtimes)} />
+          <SkillBlockMemo
+            list={getSkillsList("language")?.concat(getSkillsList("runtime"))}
+          />
         </div>
 
         {/* 2. frameworks & lis */}
         <div className="mb-10">
           <Typography variant="h3">Frameworks & Libraries</Typography>
           <hr className="my-2" />
-          <SkillBlockMemo list={frameworks} />
+          <SkillBlockMemo list={getSkillsList("framework")} />
         </div>
 
         {/* 2. devops */}
         <div className="mb-10">
           <Typography variant="h3">DevOps</Typography>
           <hr className="my-2" />
-          <SkillBlockMemo list={devops} />
+          <SkillBlockMemo list={getSkillsList("devops")} />
         </div>
       </div>
     </>

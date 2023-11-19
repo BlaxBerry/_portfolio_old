@@ -6,10 +6,22 @@ import {
   MenuList,
 } from "@material-tailwind/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { useStore } from "@nanostores/react";
+import { $store } from "@store/index";
+import { DEFAULT_LANGUAGE, TRANSLATIONS } from "src/constants";
 import { NAVIGATION_LINKS, OUTSIDE_LINKS } from "src/constants";
 import ReactLangsSwitcherMemo from "./ReactLangsSwitcher";
+import { useEffect } from "react";
 
 function ReactNavBar() {
+  const { language } = useStore($store);
+
+  useEffect(() => {
+    if (!language) $store.setKey("language", DEFAULT_LANGUAGE);
+  }, [language]);
+
+  const message = TRANSLATIONS[language]?.components;
+
   return (
     <>
       <header>
@@ -21,9 +33,9 @@ function ReactNavBar() {
 
           {/* navigation */}
           <div className="hidden space-x-4 sm:flex">
-            {NAVIGATION_LINKS.map((link) => (
-              <a key={link.id} href={`/portfolio/${link.id}`}>
-                {link.name}
+            {NAVIGATION_LINKS.map((item) => (
+              <a key={item} href={`/portfolio/${item}`}>
+                {message?.nav?.[item]}
               </a>
             ))}
           </div>
@@ -41,9 +53,9 @@ function ReactNavBar() {
             </MenuHandler>
 
             <MenuList className="block w-full sm:hidden">
-              {NAVIGATION_LINKS.map((link) => (
-                <a key={link.id} href={`/portfolio/${link.id}`}>
-                  <MenuItem className="text-center">{link.name}</MenuItem>
+              {NAVIGATION_LINKS.map((item) => (
+                <a key={item} href={`/portfolio/${item}`}>
+                  <MenuItem className="text-center">{item}</MenuItem>
                 </a>
               ))}
               <hr className="my-3" />

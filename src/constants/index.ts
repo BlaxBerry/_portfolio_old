@@ -1,10 +1,8 @@
 import type { Language } from "src/types/firestore";
+import translationEN from "src/translations/en.json";
+import translationJA from "src/translations/ja.json";
 
-export const NAVIGATION_LINKS: Array<{ id: string; name: string }> = [
-  { id: "skills", name: "Skills" },
-  { id: "works", name: "Works" },
-  { id: "contact", name: "Contact Me" },
-];
+export const NAVIGATION_LINKS: string[] = ["skills", "works", "contact"];
 
 export const OUTSIDE_LINKS: Array<{ name: string; href: string }> = [
   {
@@ -19,7 +17,9 @@ export const OUTSIDE_LINKS: Array<{ name: string; href: string }> = [
 
 export const DEFAULT_LANGUAGE: Language = "en";
 
-export const LANGUAGES: Array<{ name: Language }> = [
-  { name: "en" },
-  { name: "ja" },
-];
+export const AVAILABLE_LANGUAGES: Language[] = ["en", "ja"];
+
+export const TRANSLATIONS: Record<Language, any> = {
+  en: translationEN,
+  ja: translationJA,
+};

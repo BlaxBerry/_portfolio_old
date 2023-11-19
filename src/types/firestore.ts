@@ -1,4 +1,4 @@
-export type Language = "en" | "ja" | "zh" | "ko";
+export type Language = "en" | "ja";
 
 export interface SkillDocumentType {
   name: string;
